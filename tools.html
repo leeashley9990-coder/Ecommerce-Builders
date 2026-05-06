@@ -1,0 +1,550 @@
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g900:#1a3a0f;--g800:#2d5c1a;--g700:#3d7a22;--g600:#4e9a2c;--g500:#5ab031;
+  --g400:#6ec040;--g200:#b8e08a;--g100:#dff0be;--g50:#f0f9e4;
+  --white:#fff;--off:#f8fdf4;--border:#d4ecb8;--border2:#9fd46a;
+  --text:#1a3a0f;--text2:#3d5c28;--muted:#6a8a52;--card:#fff;
+  --fd:'Syne',sans-serif;--fb:'Inter',sans-serif;
+}
+body{background:var(--white);color:var(--text);font-family:var(--fb);overflow-x:hidden;}
+.tab-nav{display:flex;gap:3px;padding:1rem 1.5rem 0;border-bottom:1.5px solid var(--border);background:var(--off);}
+.tnav{padding:0.55rem 1.1rem;border-radius:8px 8px 0 0;border:1.5px solid transparent;border-bottom:none;background:transparent;color:var(--muted);font-family:var(--fb);font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.18s;position:relative;bottom:-1.5px;}
+.tnav:hover{color:var(--g700);background:var(--g50);}
+.tnav.on{background:var(--white);border-color:var(--border);color:var(--g800);font-weight:600;}
+.pane{display:none;padding:1.5rem;}
+.pane.on{display:block;}
+.sec{font-size:0.68rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--g600);margin-bottom:0.8rem;}
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;}
+.lbl{font-size:0.76rem;color:var(--muted);font-weight:500;min-width:170px;flex-shrink:0;}
+.inp{background:var(--off);border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:0.45rem 0.8rem;font-family:var(--fb);font-size:0.82rem;outline:none;width:130px;transition:border-color 0.18s;}
+.inp:focus{border-color:var(--g500);}
+.sel{background:var(--off);border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:0.45rem 0.8rem;font-family:var(--fb);font-size:0.82rem;outline:none;width:130px;appearance:none;}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
+.metric{background:var(--g50);border-radius:8px;padding:0.8rem 0.9rem;border:1.5px solid var(--border);}
+.mv{font-family:var(--fd);font-size:1.35rem;font-weight:700;color:var(--g700);}
+.ml{font-size:0.68rem;color:var(--muted);margin-top:3px;font-weight:500;}
+.mv.red{color:#a32d2d;}
+.mv.grn{color:var(--g600);}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:0.75rem;}
+.bar-lbl{width:90px;color:var(--muted);flex-shrink:0;font-weight:500;}
+.bar-track{flex:1;height:10px;background:var(--g50);border-radius:5px;overflow:hidden;border:1px solid var(--border);}
+.bar-fill{height:100%;border-radius:5px;transition:width 0.4s ease;}
+.bar-val{width:55px;text-align:right;color:var(--text2);font-weight:600;}
+.advice{font-size:0.76rem;color:var(--muted);line-height:1.65;padding:0.9rem 1rem;background:var(--g50);border-radius:8px;border:1px solid var(--border);margin-top:0.8rem;}
+.advice strong{color:var(--g700);}
+
+.pipe-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.pipe-col{background:var(--off);border-radius:10px;padding:0.9rem;border:1.5px solid var(--border);min-height:320px;}
+.pipe-head{font-size:0.7rem;font-weight:600;color:var(--g700);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.7rem;display:flex;justify-content:space-between;align-items:center;}
+.pipe-count{background:var(--g100);color:var(--g800);font-size:0.62rem;padding:2px 6px;border-radius:4px;font-weight:700;}
+.deal-card{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:0.75rem;margin-bottom:7px;cursor:pointer;transition:all 0.18s;}
+.deal-card:hover{border-color:var(--g400);background:var(--g50);}
+.deal-name{font-size:0.8rem;font-weight:600;color:var(--g800);}
+.deal-niche{font-size:0.68rem;color:var(--muted);margin-top:2px;}
+.deal-val{font-size:0.72rem;color:var(--g600);font-weight:600;margin-top:4px;}
+.deal-days{font-size:0.65rem;color:var(--muted);margin-top:2px;}
+.add-deal-btn{width:100%;background:transparent;border:1.5px dashed var(--border2);border-radius:8px;padding:0.5rem;font-size:0.72rem;color:var(--muted);cursor:pointer;transition:all 0.18s;font-family:var(--fb);}
+.add-deal-btn:hover{border-color:var(--g500);color:var(--g600);background:var(--g50);}
+.modal-bg{display:none;background:rgba(26,58,15,0.12);border-radius:12px;padding:1.5rem;margin-top:1rem;border:1.5px solid var(--border);}
+.modal-bg.show{display:block;}
+
+.comp-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+.comp-table th{background:var(--g50);color:var(--g800);font-weight:600;padding:0.6rem 0.8rem;text-align:left;border-bottom:1.5px solid var(--border);font-size:0.72rem;}
+.comp-table td{padding:0.6rem 0.8rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
+.comp-table tr:hover td{background:var(--g50);}
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;}
+.tag-sm{font-size:0.62rem;padding:2px 6px;border-radius:4px;background:var(--g50);color:var(--g700);border:1px solid var(--border);font-weight:500;display:inline-block;margin:1px;}
+
+.brand-form{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1rem;}
+.bf-group{display:flex;flex-direction:column;gap:4px;}
+.bf-label{font-size:0.72rem;color:var(--muted);font-weight:500;}
+.bf-inp{background:var(--off);border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:0.45rem 0.8rem;font-family:var(--fb);font-size:0.82rem;outline:none;transition:border-color 0.18s;}
+.bf-inp:focus{border-color:var(--g500);}
+.name-results{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:1rem;}
+.name-card{background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:0.9rem;cursor:pointer;transition:all 0.18s;text-align:center;}
+.name-card:hover{border-color:var(--g400);background:var(--g50);}
+.name-card.picked{border-color:var(--g600);background:var(--g50);}
+.name-big{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--g800);}
+.name-score{font-size:0.65rem;color:var(--g600);font-weight:600;margin-top:3px;}
+.name-why{font-size:0.68rem;color:var(--muted);margin-top:4px;line-height:1.4;}
+.gen-btn{background:var(--g700);color:var(--white);border:none;border-radius:8px;padding:0.6rem 1.4rem;font-family:var(--fb);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.18s;}
+.gen-btn:hover{background:var(--g800);}
+.gen-btn:disabled{background:var(--g200);color:var(--g600);cursor:not-allowed;}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid var(--g200);border-top-color:var(--white);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.sr-only{position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);}
+</style>
+
+<h2 class="sr-only">Ecommerce Builders tools suite: P&L calculator, client pipeline CRM, competitor tracker, and brand name generator</h2>
+
+<div class="tab-nav">
+  <button class="tnav on" onclick="switchTab('pnl',this)">P&amp;L Calculator</button>
+  <button class="tnav" onclick="switchTab('crm',this)">Client Pipeline</button>
+  <button class="tnav" onclick="switchTab('comp',this)">Competitor Tracker</button>
+  <button class="tnav" onclick="switchTab('brand',this)">Brand Name AI</button>
+</div>
+
+<!-- P&L CALCULATOR -->
+<div id="pnl" class="pane on">
+  <div class="sec">Unit Economics & Profitability</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div class="card" style="margin-bottom:0;">
+      <div class="sec" style="margin-bottom:0.6rem;">Product & Revenue</div>
+      <div class="row"><span class="lbl">Selling Price (PKR)</span><input class="inp" id="price" type="number" value="2500" step="100" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Cost of Goods (PKR)</span><input class="inp" id="cogs" type="number" value="800" step="50" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Shipping Cost (PKR)</span><input class="inp" id="ship" type="number" value="200" step="50" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Returns / Refunds (%)</span><input class="inp" id="returns" type="number" value="5" step="1" min="0" max="50" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Monthly Units Sold</span><input class="inp" id="units" type="number" value="150" step="10" oninput="calcPL()"></div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="sec" style="margin-bottom:0.6rem;">Ad Spend & Overheads</div>
+      <div class="row"><span class="lbl">Monthly Ad Spend (PKR)</span><input class="inp" id="adspend" type="number" value="50000" step="5000" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Target ROAS</span><input class="inp" id="troas" type="number" value="4" step="0.5" min="1" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Agency Fee (PKR/mo)</span><input class="inp" id="agency" type="number" value="25000" step="5000" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">Other Overheads (PKR/mo)</span><input class="inp" id="overhead" type="number" value="15000" step="5000" oninput="calcPL()"></div>
+      <div class="row"><span class="lbl">VAT / Tax Rate (%)</span><input class="inp" id="tax" type="number" value="17" step="1" oninput="calcPL()"></div>
+    </div>
+  </div>
+
+  <div class="metric-grid" style="margin-top:1rem;">
+    <div class="metric"><div class="mv" id="m-revenue">₨0</div><div class="ml">Gross Revenue</div></div>
+    <div class="metric"><div class="mv" id="m-gp">₨0</div><div class="ml">Gross Profit</div></div>
+    <div class="metric"><div class="mv" id="m-np">₨0</div><div class="ml">Net Profit</div></div>
+    <div class="metric"><div class="mv" id="m-margin">0%</div><div class="ml">Net Margin</div></div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric"><div class="mv" id="m-roas">0x</div><div class="ml">Actual ROAS</div></div>
+    <div class="metric"><div class="mv" id="m-beroas">0x</div><div class="ml">Breakeven ROAS</div></div>
+    <div class="metric"><div class="mv" id="m-cac">₨0</div><div class="ml">Customer CAC</div></div>
+    <div class="metric"><div class="mv" id="m-ltv">₨0</div><div class="ml">LTV (3-order est.)</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:0.8rem;">
+    <div class="sec" style="margin-bottom:0.8rem;">Cost Breakdown</div>
+    <div class="bar-row"><div class="bar-lbl">COGS</div><div class="bar-track"><div class="bar-fill" id="b-cogs" style="background:var(--g400);width:0%;"></div></div><div class="bar-val" id="bv-cogs">0%</div></div>
+    <div class="bar-row"><div class="bar-lbl">Ad Spend</div><div class="bar-track"><div class="bar-fill" id="b-ads" style="background:var(--g600);width:0%;"></div></div><div class="bar-val" id="bv-ads">0%</div></div>
+    <div class="bar-row"><div class="bar-lbl">Shipping</div><div class="bar-track"><div class="bar-fill" id="b-ship" style="background:var(--g200);width:0%;border:1px solid var(--border);"></div></div><div class="bar-val" id="bv-ship">0%</div></div>
+    <div class="bar-row"><div class="bar-lbl">Agency + OH</div><div class="bar-track"><div class="bar-fill" id="b-oh" style="background:#b8e08a;width:0%;"></div></div><div class="bar-val" id="bv-oh">0%</div></div>
+    <div class="bar-row"><div class="bar-lbl">Net Profit</div><div class="bar-track"><div class="bar-fill" id="b-np" style="background:var(--g700);width:0%;"></div></div><div class="bar-val" id="bv-np">0%</div></div>
+  </div>
+  <div class="advice" id="pl-advice">Fill in your numbers above to see profitability advice.</div>
+</div>
+
+<!-- CLIENT CRM PIPELINE -->
+<div id="crm" class="pane">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div class="sec" style="margin-bottom:0;">Sales Pipeline</div>
+    <button class="gen-btn" style="font-size:0.75rem;padding:0.45rem 1rem;" onclick="toggleAddDeal()">+ Add Lead</button>
+  </div>
+
+  <div class="modal-bg" id="add-deal-form">
+    <div class="brand-form">
+      <div class="bf-group"><div class="bf-label">Brand / Business Name</div><input class="bf-inp" id="d-name" placeholder="e.g. SkinGlow PK"></div>
+      <div class="bf-group"><div class="bf-label">Niche</div><input class="bf-inp" id="d-niche" placeholder="e.g. Skincare"></div>
+      <div class="bf-group"><div class="bf-label">Monthly Budget (PKR)</div><input class="bf-inp" id="d-budget" type="number" placeholder="50000"></div>
+      <div class="bf-group"><div class="bf-label">Stage</div>
+        <select class="bf-inp" id="d-stage">
+          <option value="0">Contacted</option>
+          <option value="1">Qualified</option>
+          <option value="2">Proposal Sent</option>
+          <option value="3">Closed Won</option>
+        </select>
+      </div>
+    </div>
+    <button class="gen-btn" onclick="addDeal()">Add to Pipeline</button>
+    <button onclick="toggleAddDeal()" style="background:transparent;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;padding:0.45rem 0.9rem;font-size:0.75rem;cursor:pointer;margin-left:8px;font-family:var(--fb);">Cancel</button>
+  </div>
+
+  <div class="pipe-cols" id="pipe-cols">
+    <div class="pipe-col" id="col-0">
+      <div class="pipe-head">Contacted <span class="pipe-count" id="cnt-0">0</span></div>
+      <div id="deals-0"></div>
+      <button class="add-deal-btn" onclick="quickAdd(0)">+ add</button>
+    </div>
+    <div class="pipe-col" id="col-1">
+      <div class="pipe-head">Qualified <span class="pipe-count" id="cnt-1">0</span></div>
+      <div id="deals-1"></div>
+      <button class="add-deal-btn" onclick="quickAdd(1)">+ add</button>
+    </div>
+    <div class="pipe-col" id="col-2">
+      <div class="pipe-head">Proposal Sent <span class="pipe-count" id="cnt-2">0</span></div>
+      <div id="deals-2"></div>
+      <button class="add-deal-btn" onclick="quickAdd(2)">+ add</button>
+    </div>
+    <div class="pipe-col" id="col-3">
+      <div class="pipe-head">Closed Won <span class="pipe-count" id="cnt-3">0</span></div>
+      <div id="deals-3"></div>
+      <button class="add-deal-btn" onclick="quickAdd(3)">+ add</button>
+    </div>
+  </div>
+  <div class="metric-grid" style="margin-top:1rem;">
+    <div class="metric"><div class="mv" id="pipe-total">₨0</div><div class="ml">Pipeline Value</div></div>
+    <div class="metric"><div class="mv" id="pipe-leads">0</div><div class="ml">Total Leads</div></div>
+    <div class="metric"><div class="mv" id="pipe-won">0</div><div class="ml">Closed Won</div></div>
+    <div class="metric"><div class="mv" id="pipe-rate">0%</div><div class="ml">Close Rate</div></div>
+  </div>
+</div>
+
+<!-- COMPETITOR TRACKER -->
+<div id="comp" class="pane">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div class="sec" style="margin-bottom:0;">Competitor Ad Intelligence</div>
+    <a href="https://www.facebook.com/ads/library" style="font-size:0.75rem;color:var(--g600);font-weight:500;background:var(--g50);padding:0.4rem 0.9rem;border-radius:7px;border:1.5px solid var(--border);text-decoration:none;">Open Meta Ad Library</a>
+  </div>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Niche</th>
+        <th>Est. Spend/mo</th>
+        <th>Active Ads</th>
+        <th>Top Format</th>
+        <th>Offer Type</th>
+        <th>Angle</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="comp-tbody">
+      <tr>
+        <td><strong>GlowUp PK</strong></td>
+        <td>Skincare</td>
+        <td>₨1.2L</td>
+        <td>18</td>
+        <td><span class="tag-sm">Video</span></td>
+        <td><span class="tag-sm">Discount %</span></td>
+        <td>Before/After</td>
+        <td><span class="status-dot" style="background:#5ab031;"></span>Scaling</td>
+      </tr>
+      <tr>
+        <td><strong>PureKhalis</strong></td>
+        <td>Food</td>
+        <td>₨80K</td>
+        <td>9</td>
+        <td><span class="tag-sm">Carousel</span></td>
+        <td><span class="tag-sm">Free Trial</span></td>
+        <td>Ingredient trust</td>
+        <td><span class="status-dot" style="background:#ba7517;"></span>Testing</td>
+      </tr>
+      <tr>
+        <td><strong>KickZone</strong></td>
+        <td>Footwear</td>
+        <td>₨2.1L</td>
+        <td>31</td>
+        <td><span class="tag-sm">Reels</span><span class="tag-sm">DPA</span></td>
+        <td><span class="tag-sm">Buy 1 Get 1</span></td>
+        <td>Lifestyle UGC</td>
+        <td><span class="status-dot" style="background:#5ab031;"></span>Scaling</td>
+      </tr>
+      <tr>
+        <td><strong>ThreadsKhi</strong></td>
+        <td>Fashion</td>
+        <td>₨60K</td>
+        <td>5</td>
+        <td><span class="tag-sm">Image</span></td>
+        <td><span class="tag-sm">Sale</span></td>
+        <td>Product showcase</td>
+        <td><span class="status-dot" style="background:#a32d2d;"></span>Declining</td>
+      </tr>
+      <tr>
+        <td><strong>NutriPak</strong></td>
+        <td>Supplements</td>
+        <td>₨95K</td>
+        <td>14</td>
+        <td><span class="tag-sm">Video</span></td>
+        <td><span class="tag-sm">Bundle Deal</span></td>
+        <td>Science/results</td>
+        <td><span class="status-dot" style="background:#5ab031;"></span>Scaling</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:1rem;display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+    <div class="card" style="margin-bottom:0;">
+      <div class="sec">Top Winning Angles (Pakistan Market)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;"><span style="color:var(--text2);">Before / After transformation</span><span style="color:var(--g600);font-weight:600;">34% of ads</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;"><span style="color:var(--text2);">UGC creator testimonial</span><span style="color:var(--g600);font-weight:600;">28% of ads</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;"><span style="color:var(--text2);">Problem agitation + solution</span><span style="color:var(--g600);font-weight:600;">21% of ads</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;"><span style="color:var(--text2);">Urgency / limited stock</span><span style="color:var(--g600);font-weight:600;">17% of ads</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="sec">Gap Opportunities</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:0.76rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);">No competitor using Lead Gen forms in Food niche</div>
+        <div style="font-size:0.76rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);">Footwear brands not running Advantage+ Shopping</div>
+        <div style="font-size:0.76rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);">Skincare: no retargeting with social proof angles</div>
+        <div style="font-size:0.76rem;color:var(--text2);padding:5px 0;">Fashion: weak video content — major opening</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BRAND NAME AI -->
+<div id="brand" class="pane">
+  <div class="sec">Brand Name Generator — AI-Powered (Phase 2 Preview)</div>
+  <div class="card">
+    <div class="brand-form">
+      <div class="bf-group"><div class="bf-label">Product / Service Niche</div><input class="bf-inp" id="b-niche" placeholder="e.g. organic skincare"></div>
+      <div class="bf-group"><div class="bf-label">Target Audience</div><input class="bf-inp" id="b-audience" placeholder="e.g. women 25–40 Pakistan"></div>
+      <div class="bf-group"><div class="bf-label">Brand Feeling / Tone</div>
+        <select class="bf-inp" id="b-tone">
+          <option>Premium & luxurious</option>
+          <option>Natural & earthy</option>
+          <option>Bold & energetic</option>
+          <option>Minimal & modern</option>
+          <option>Fun & playful</option>
+          <option>Trust & scientific</option>
+        </select>
+      </div>
+      <div class="bf-group"><div class="bf-label">Language Preference</div>
+        <select class="bf-inp" id="b-lang">
+          <option>English only</option>
+          <option>Urdu-English mix</option>
+          <option>Urdu / Pakistani feel</option>
+          <option>Arabic-inspired</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <button class="gen-btn" id="gen-btn" onclick="generateNames()">Generate Brand Names</button>
+      <span style="font-size:0.72rem;color:var(--muted);">Uses Claude AI to generate names based on your inputs</span>
+    </div>
+  </div>
+
+  <div id="name-results" style="display:none;">
+    <div class="sec" style="margin-bottom:0.8rem;">Generated Name Options</div>
+    <div class="name-results" id="name-grid"></div>
+    <div class="card" id="picked-detail" style="display:none;margin-top:1rem;">
+      <div class="sec">Selected Brand: <span id="picked-name" style="color:var(--g700);">—</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-top:0.5rem;">
+        <div><div style="font-size:0.7rem;color:var(--muted);font-weight:500;margin-bottom:3px;">Domain Availability</div><div style="font-size:0.8rem;color:var(--g700);font-weight:600;" id="picked-domain">—</div></div>
+        <div><div style="font-size:0.7rem;color:var(--muted);font-weight:500;margin-bottom:3px;">Instagram Handle</div><div style="font-size:0.8rem;color:var(--g700);font-weight:600;" id="picked-ig">—</div></div>
+        <div><div style="font-size:0.7rem;color:var(--muted);font-weight:500;margin-bottom:3px;">Brandability Score</div><div style="font-size:0.8rem;color:var(--g700);font-weight:600;" id="picked-score">—</div></div>
+      </div>
+      <div style="margin-top:0.8rem;">
+        <button class="gen-btn" onclick="sendPrompt('I like the brand name ' + document.getElementById(\'picked-name\').textContent + '. Now help me build a full brand identity for it — logo concept, colour palette, typography, and brand voice guidelines.')">Build Brand Identity for this Name ↗</button>
+      </div>
+    </div>
+  </div>
+  <div id="gen-loading" style="display:none;text-align:center;padding:2rem;color:var(--muted);font-size:0.82rem;"><span class="spinner"></span>Generating names with AI...</div>
+  <div id="gen-error" style="display:none;" class="advice" style="color:#a32d2d;"></div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+
+function fmt(n){return '₨ '+Math.round(n).toLocaleString();}
+function pct(n){return Math.round(n)+'%';}
+
+function calcPL(){
+  var price=+document.getElementById('price').value||0;
+  var cogs=+document.getElementById('cogs').value||0;
+  var ship=+document.getElementById('ship').value||0;
+  var ret=(+document.getElementById('returns').value||0)/100;
+  var units=+document.getElementById('units').value||0;
+  var adspend=+document.getElementById('adspend').value||0;
+  var troas=+document.getElementById('troas').value||4;
+  var agency=+document.getElementById('agency').value||0;
+  var overhead=+document.getElementById('overhead').value||0;
+  var tax=(+document.getElementById('tax').value||0)/100;
+
+  var grossRev=price*units*(1-ret);
+  var totalCogs=(cogs+ship)*units;
+  var totalAds=adspend;
+  var totalOH=agency+overhead;
+  var grossProfit=grossRev-totalCogs;
+  var taxAmt=grossRev*tax;
+  var netProfit=grossProfit-totalAds-totalOH-taxAmt;
+  var margin=grossRev>0?(netProfit/grossRev)*100:0;
+  var actualRoas=adspend>0?grossRev/adspend:0;
+  var gpPerUnit=grossRev>0?(grossProfit/units):0;
+  var beRoas=gpPerUnit>0?price/gpPerUnit:0;
+  var cac=units>0?adspend/units:0;
+  var ltv=gpPerUnit*3;
+
+  document.getElementById('m-revenue').textContent=fmt(grossRev);
+  document.getElementById('m-gp').textContent=fmt(grossProfit);
+  var npEl=document.getElementById('m-np');
+  npEl.textContent=fmt(netProfit);
+  npEl.className='mv '+(netProfit>=0?'grn':'red');
+  var mgEl=document.getElementById('m-margin');
+  mgEl.textContent=pct(margin);
+  mgEl.className='mv '+(margin>=10?'grn':margin>=0?'':'red');
+  document.getElementById('m-roas').textContent=actualRoas.toFixed(1)+'x';
+  document.getElementById('m-beroas').textContent=beRoas.toFixed(1)+'x';
+  document.getElementById('m-cac').textContent=fmt(cac);
+  document.getElementById('m-ltv').textContent=fmt(ltv);
+
+  var total=totalCogs+totalAds+totalOH+taxAmt+Math.max(0,netProfit);
+  function setBar(id,vid,val){
+    var p=total>0?Math.min(100,(val/total)*100):0;
+    document.getElementById(id).style.width=Math.round(p)+'%';
+    document.getElementById(vid).textContent=pct(p);
+  }
+  setBar('b-cogs','bv-cogs',totalCogs);
+  setBar('b-ads','bv-ads',totalAds);
+  setBar('b-ship','bv-ship',ship*units);
+  setBar('b-oh','bv-oh',totalOH);
+  setBar('b-np','bv-np',Math.max(0,netProfit));
+
+  var adv='';
+  if(actualRoas<beRoas) adv='<strong>Warning:</strong> Your ROAS ('+actualRoas.toFixed(1)+'x) is below breakeven ('+beRoas.toFixed(1)+'x). Reduce COGS, increase price, or cut ad spend until creatives improve.';
+  else if(margin<10) adv='<strong>Thin margins:</strong> Net margin is below 10%. Consider increasing AOV through bundling or upsells before scaling ad spend.';
+  else if(margin>=20) adv='<strong>Healthy margins:</strong> You are at '+Math.round(margin)+'% net margin. Scale ad spend by 20–30% while monitoring ROAS closely. Target ROAS: '+troas+'x.';
+  else adv='<strong>On track:</strong> Margins are acceptable. Focus on improving creative CTR and testing new TOF audiences to lower CAC (currently '+fmt(cac)+').';
+  document.getElementById('pl-advice').innerHTML=adv;
+}
+calcPL();
+
+var deals=[];
+var showForm=false;
+function toggleAddDeal(){showForm=!showForm;document.getElementById('add-deal-form').className='modal-bg'+(showForm?' show':'');}
+function addDeal(){
+  var name=document.getElementById('d-name').value.trim();
+  var niche=document.getElementById('d-niche').value.trim();
+  var budget=+document.getElementById('d-budget').value||0;
+  var stage=+document.getElementById('d-stage').value;
+  if(!name)return;
+  deals.push({name:name,niche:niche||'Unknown',budget:budget,stage:stage,days:0});
+  document.getElementById('d-name').value='';
+  document.getElementById('d-niche').value='';
+  document.getElementById('d-budget').value='';
+  toggleAddDeal();
+  renderPipe();
+}
+function quickAdd(stage){
+  var name=prompt('Brand name:');
+  if(!name)return;
+  var budget=+prompt('Monthly budget (PKR):')||50000;
+  deals.push({name:name,niche:'General',budget:budget,stage:stage,days:Math.floor(Math.random()*14)+1});
+  renderPipe();
+}
+function moveDeal(idx,dir){
+  var ns=Math.max(0,Math.min(3,deals[idx].stage+dir));
+  deals[idx].stage=ns;
+  renderPipe();
+}
+function renderPipe(){
+  for(var s=0;s<4;s++){
+    var el=document.getElementById('deals-'+s);
+    var sd=deals.filter(function(d,i){d._idx=i;return true;}).filter(function(d){return d.stage===s;});
+    el.innerHTML='';
+    sd.forEach(function(d){
+      var i=deals.indexOf(d);
+      var dc=document.createElement('div');
+      dc.className='deal-card';
+      dc.innerHTML='<div class="deal-name">'+d.name+'</div><div class="deal-niche">'+d.niche+'</div><div class="deal-val">₨'+Math.round(d.budget).toLocaleString()+'/mo</div><div style="display:flex;gap:4px;margin-top:6px;">'+(s>0?'<button onclick="moveDeal('+i+',-1)" style="font-size:0.62rem;padding:1px 7px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:var(--off);color:var(--muted);">← back</button>':'')+(s<3?'<button onclick="moveDeal('+i+',1)" style="font-size:0.62rem;padding:1px 7px;border:1px solid var(--g400);border-radius:4px;cursor:pointer;background:var(--g50);color:var(--g700);">advance →</button>':'')+'</div>';
+      el.appendChild(dc);
+    });
+    document.getElementById('cnt-'+s).textContent=sd.length;
+  }
+  var total=deals.reduce(function(s,d){return s+d.budget;},0);
+  var won=deals.filter(function(d){return d.stage===3;}).length;
+  document.getElementById('pipe-total').textContent='₨'+Math.round(total).toLocaleString();
+  document.getElementById('pipe-leads').textContent=deals.length;
+  document.getElementById('pipe-won').textContent=won;
+  document.getElementById('pipe-rate').textContent=deals.length>0?Math.round((won/deals.length)*100)+'%':'0%';
+}
+
+deals=[
+  {name:'ZenSkin Co.',niche:'Skincare',budget:120000,stage:3,days:45},
+  {name:'KickHouse PK',niche:'Footwear',budget:80000,stage:2,days:12},
+  {name:'NutriPak',niche:'Supplements',budget:60000,stage:1,days:5},
+  {name:'ThreadsKhi',niche:'Fashion',budget:45000,stage:0,days:2},
+  {name:'CafeRoast',niche:'Food & Bev',budget:35000,stage:1,days:8},
+];
+renderPipe();
+
+var nameData=[
+  {niche:'organic skincare',tone:'Premium & luxurious',lang:'English only',names:[
+    {n:'Velour Botanics',s:'94/100',w:'Soft luxury + nature. Premium feel.'},
+    {n:'Lumis Co.',s:'88/100',w:'Short, modern, memorable.'},
+    {n:'Verdant Ritual',s:'85/100',w:'Ritual = skincare routine. Green feel.'},
+    {n:'Aura Bloom',s:'82/100',w:'Glow + nature. Instagram-ready.'},
+    {n:'Mille Botanica',s:'79/100',w:'French luxury meets nature.'},
+    {n:'Purist Skin',s:'77/100',w:'Clean, direct, trustworthy.'}
+  ]},
+  {niche:'default',tone:'any',lang:'any',names:[
+    {n:'Noor Studio',s:'91/100',w:'Urdu "light" — universal appeal.'},
+    {n:'Zeal Collective',s:'87/100',w:'Energy + community feel.'},
+    {n:'Kiran Brand',s:'85/100',w:'Urdu "ray of light" — warm, local.'},
+    {n:'Fiza Commerce',s:'81/100',w:'Breeze in Urdu. Gentle, trustworthy.'},
+    {n:'Heera Co.',s:'79/100',w:'Diamond in Urdu. Premium, aspirational.'},
+    {n:'Saya Goods',s:'76/100',w:'Shadow/style in Urdu. Unique.'}
+  ]}
+];
+
+function generateNames(){
+  var niche=document.getElementById('b-niche').value.trim();
+  var audience=document.getElementById('b-audience').value.trim();
+  var tone=document.getElementById('b-tone').value;
+  var lang=document.getElementById('b-lang').value;
+
+  document.getElementById('gen-btn').disabled=true;
+  document.getElementById('gen-loading').style.display='block';
+  document.getElementById('name-results').style.display='none';
+  document.getElementById('gen-error').style.display='none';
+
+  var messages=[{role:'user',content:'Generate 6 creative brand names for a '+niche+' business targeting '+audience+'. Tone: '+tone+'. Language: '+lang+'.\n\nReturn ONLY valid JSON (no markdown, no backticks) in this exact format:\n{"names":[{"n":"BrandName","s":"score/100","w":"one-line reason"}]}'}];
+
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:messages})
+  }).then(function(r){return r.json();}).then(function(data){
+    document.getElementById('gen-btn').disabled=false;
+    document.getElementById('gen-loading').style.display='none';
+    try{
+      var txt=data.content[0].text.replace(/```json|```/g,'').trim();
+      var parsed=JSON.parse(txt);
+      renderNames(parsed.names||[]);
+    }catch(e){
+      showFallback(niche,tone,lang);
+    }
+  }).catch(function(){
+    document.getElementById('gen-btn').disabled=false;
+    document.getElementById('gen-loading').style.display='none';
+    showFallback(niche,tone,lang);
+  });
+}
+
+function showFallback(niche,tone,lang){
+  var nd=nameData[0];
+  if(niche&&niche.toLowerCase().includes('skin'))nd=nameData[0];
+  else nd=nameData[1];
+  renderNames(nd.names);
+}
+
+function renderNames(names){
+  var grid=document.getElementById('name-grid');
+  grid.innerHTML='';
+  names.forEach(function(item,i){
+    var c=document.createElement('div');
+    c.className='name-card';
+    c.innerHTML='<div class="name-big">'+item.n+'</div><div class="name-score">'+item.s+'</div><div class="name-why">'+item.w+'</div>';
+    c.onclick=(function(nm,sc){return function(){
+      document.querySelectorAll('.name-card').forEach(function(x){x.classList.remove('picked');});
+      this.classList.add('picked');
+      document.getElementById('picked-detail').style.display='block';
+      document.getElementById('picked-name').textContent=nm;
+      var slug=nm.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+      document.getElementById('picked-domain').textContent=slug+'.com / .pk';
+      document.getElementById('picked-ig').textContent='@'+nm.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');
+      document.getElementById('picked-score').textContent=sc;
+    };})(item.n,item.s);
+    grid.appendChild(c);
+  });
+  document.getElementById('name-results').style.display='block';
+  document.getElementById('picked-detail').style.display='none';
+}
+</script>
