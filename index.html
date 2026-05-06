@@ -1,0 +1,623 @@
+
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --g900:#1a3a0f;
+    --g800:#2d5c1a;
+    --g700:#3d7a22;
+    --g600:#4e9a2c;
+    --g500:#5ab031;
+    --g400:#6ec040;
+    --g200:#b8e08a;
+    --g100:#dff0be;
+    --g50:#f0f9e4;
+    --white:#ffffff;
+    --off:#f8fdf4;
+    --border:#d4ecb8;
+    --border2:#b8e08a;
+    --text:#1a3a0f;
+    --text2:#3d5c28;
+    --muted:#6a8a52;
+    --card:#ffffff;
+    --font-d:'Syne',sans-serif;
+    --font-b:'Inter',sans-serif;
+  }
+
+  body{background:var(--white);color:var(--text);font-family:var(--font-b);min-height:100vh;overflow-x:hidden;}
+
+  nav{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.8rem;border-bottom:1.5px solid var(--border);background:var(--white);position:sticky;top:0;z-index:100;}
+  .logo-wrap{display:flex;align-items:center;gap:10px;}
+  .logo-icon{width:36px;height:36px;}
+  .logo-text{font-family:var(--font-d);font-weight:800;font-size:1rem;letter-spacing:-0.01em;color:var(--g700);}
+  .logo-text span{color:var(--g500);}
+  .nav-tabs{display:flex;gap:3px;}
+  .nav-tab{padding:0.4rem 0.85rem;border-radius:6px;border:none;background:transparent;color:var(--muted);font-family:var(--font-b);font-size:0.78rem;cursor:pointer;transition:all 0.18s;font-weight:500;}
+  .nav-tab:hover{color:var(--g700);background:var(--g50);}
+  .nav-tab.active{background:var(--g700);color:var(--white);}
+  .nav-cta{padding:0.4rem 1.1rem;background:var(--g600);color:var(--white);border:none;border-radius:6px;font-family:var(--font-b);font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.18s;}
+  .nav-cta:hover{background:var(--g700);}
+
+  .page{display:none;padding:1.8rem;animation:fi 0.25s ease;}
+  .page.active{display:block;}
+  @keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  .hero{text-align:center;padding:3.5rem 1rem 2.5rem;border-bottom:1.5px solid var(--border);}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--g50);border:1.5px solid var(--border2);color:var(--g700);font-size:0.7rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:100px;margin-bottom:1.4rem;}
+  .hero h1{font-family:var(--font-d);font-size:2.8rem;font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:var(--g900);margin-bottom:0.9rem;}
+  .hero h1 em{color:var(--g600);font-style:normal;}
+  .hero p{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto 1.8rem;line-height:1.7;}
+  .hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{padding:0.7rem 1.6rem;background:var(--g700);color:var(--white);border:none;border-radius:8px;font-family:var(--font-b);font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.18s;}
+  .btn-primary:hover{background:var(--g800);transform:translateY(-1px);}
+  .btn-ghost{padding:0.7rem 1.6rem;background:transparent;color:var(--g700);border:1.5px solid var(--border2);border-radius:8px;font-family:var(--font-b);font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.18s;}
+  .btn-ghost:hover{background:var(--g50);}
+
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--border);}
+  .stat{background:var(--white);padding:1.4rem 1.5rem;text-align:center;border:none;}
+  .stat-num{font-family:var(--font-d);font-size:1.9rem;font-weight:800;color:var(--g600);}
+  .stat-label{font-size:0.72rem;color:var(--muted);margin-top:3px;font-weight:500;}
+
+  .sec-tag{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--g600);margin-bottom:0.4rem;}
+  .sec-title{font-family:var(--font-d);font-size:1.7rem;font-weight:700;letter-spacing:-0.02em;color:var(--g900);}
+  .sec-sub{color:var(--muted);font-size:0.87rem;margin-top:0.35rem;line-height:1.6;}
+  .sec-head{margin-bottom:1.8rem;}
+
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1.8rem;}
+  .card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.3rem;cursor:pointer;transition:all 0.22s;position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g500);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+  .card:hover{border-color:var(--g400);transform:translateY(-2px);background:var(--off);}
+  .card:hover::before{transform:scaleX(1);}
+  .card-icon{font-size:1.3rem;margin-bottom:0.7rem;}
+  .card h3{font-family:var(--font-d);font-size:0.95rem;font-weight:700;color:var(--g800);margin-bottom:0.4rem;}
+  .card p{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+  .pills{margin-top:0.8rem;display:flex;flex-wrap:wrap;gap:5px;}
+  .pill{background:var(--g50);border:1px solid var(--border);color:var(--g700);font-size:0.65rem;padding:2px 7px;border-radius:4px;font-weight:500;}
+
+  .panel{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.4rem;margin-bottom:1rem;}
+  .panel-label{font-size:0.68rem;color:var(--g600);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.9rem;}
+
+  .funnel-stage{display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all 0.18s;border:1px solid transparent;}
+  .funnel-stage:hover{background:var(--g50);border-color:var(--border);}
+  .f-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
+  .f-content h4{font-size:0.82rem;font-weight:600;color:var(--g800);}
+  .f-content p{font-size:0.73rem;color:var(--muted);margin-top:2px;line-height:1.5;}
+  .f-badge{margin-left:auto;font-size:0.68rem;padding:3px 8px;border-radius:4px;white-space:nowrap;background:var(--g50);color:var(--g700);border:1px solid var(--border);font-weight:500;}
+
+  .budget-bar-bg{height:80px;background:var(--g50);border-radius:6px;position:relative;overflow:hidden;border:1px solid var(--border);}
+  .budget-bar-fill{position:absolute;bottom:0;left:0;right:0;border-radius:6px;transition:height 0.4s ease;}
+  .budget-bar-label{font-size:0.7rem;color:var(--muted);margin-top:5px;text-align:center;font-weight:500;}
+  .budget-bar-val{font-size:0.82rem;font-weight:600;color:var(--g800);text-align:center;margin-top:2px;}
+
+  .case-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.22s;}
+  .case-card:hover{border-color:var(--g400);transform:translateY(-2px);}
+  .case-banner{height:100px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;}
+  .case-body{padding:1.1rem;}
+  .case-tag{display:inline-block;font-size:0.63rem;padding:2px 7px;border-radius:4px;margin-right:4px;margin-bottom:0.6rem;background:var(--g50);color:var(--g700);border:1px solid var(--border);font-weight:500;}
+  .case-title{font-family:var(--font-d);font-size:0.92rem;font-weight:700;color:var(--g800);margin-bottom:0.3rem;}
+  .case-desc{font-size:0.76rem;color:var(--muted);line-height:1.5;margin-bottom:0.9rem;}
+  .case-metrics{display:flex;gap:1.2rem;}
+  .cm-val{font-size:1.2rem;font-weight:700;font-family:var(--font-d);color:var(--g600);}
+  .cm-label{font-size:0.65rem;color:var(--muted);}
+
+  .booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .bform{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.4rem;}
+  .form-label{font-size:0.75rem;color:var(--muted);margin-bottom:0.35rem;display:block;font-weight:500;}
+  .form-group{margin-bottom:0.9rem;}
+  .form-input{width:100%;background:var(--off);border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:0.55rem 0.85rem;font-family:var(--font-b);font-size:0.82rem;outline:none;transition:border-color 0.18s;}
+  .form-input:focus{border-color:var(--g500);}
+  .form-select{width:100%;background:var(--off);border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:0.55rem 0.85rem;font-family:var(--font-b);font-size:0.82rem;outline:none;appearance:none;}
+  .form-select option{background:#fff;}
+  .time-slot{padding:0.45rem;text-align:center;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;font-size:0.73rem;transition:all 0.18s;background:transparent;color:var(--muted);font-weight:500;}
+  .time-slot:hover,.time-slot.selected{background:var(--g700);border-color:var(--g700);color:white;}
+  .time-slot.taken{opacity:0.3;cursor:not-allowed;}
+  .cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:0.73rem;cursor:pointer;border:1px solid transparent;transition:all 0.18s;color:var(--text2);}
+  .cal-day:hover{border-color:var(--g500);color:var(--g700);}
+  .cal-day.selected{background:var(--g700);color:white;}
+  .cal-day.today{border-color:var(--g400);color:var(--g600);font-weight:600;}
+  .cal-day.past{opacity:0.25;pointer-events:none;}
+
+  .outreach-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.3rem;margin-bottom:1rem;}
+  .outreach-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem;}
+  .outreach-title{font-family:var(--font-d);font-size:0.9rem;font-weight:700;color:var(--g800);}
+  .status-pill{font-size:0.65rem;padding:3px 9px;border-radius:100px;background:var(--g50);color:var(--g700);border:1px solid var(--border);font-weight:500;}
+  .outreach-body{font-size:0.78rem;line-height:1.75;color:var(--muted);}
+  .outreach-body strong{color:var(--g800);}
+
+  .auto-step{display:flex;align-items:center;gap:0.9rem;background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:0.9rem 1.1rem;transition:all 0.18s;cursor:pointer;margin-bottom:6px;}
+  .auto-step:hover{border-color:var(--g400);background:var(--off);}
+  .auto-num{width:28px;height:28px;border-radius:6px;background:var(--g50);color:var(--g700);font-size:0.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border);}
+  .auto-content h4{font-size:0.82rem;font-weight:600;color:var(--g800);}
+  .auto-content p{font-size:0.73rem;color:var(--muted);margin-top:2px;line-height:1.5;}
+  .auto-status{margin-left:auto;font-size:0.65rem;padding:2px 8px;border-radius:4px;white-space:nowrap;background:var(--g50);color:var(--g700);border:1px solid var(--border);font-weight:500;}
+  .auto-status.future{color:var(--muted);border-color:var(--border);}
+  .connector-line{width:1.5px;height:14px;background:var(--border2);margin-left:25px;}
+
+  .rdm-item{display:flex;gap:1.1rem;padding:1.1rem 0;border-bottom:1.5px solid var(--border);}
+  .rdm-item:last-child{border-bottom:none;}
+  .rdm-num{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:0.8rem;font-weight:700;flex-shrink:0;}
+  .rdm-content h4{font-size:0.85rem;font-weight:600;color:var(--g800);margin-bottom:0.25rem;}
+  .rdm-content p{font-size:0.76rem;color:var(--muted);line-height:1.6;}
+  .phase-tag{font-size:0.62rem;margin-top:0.4rem;display:inline-block;padding:2px 7px;border-radius:4px;font-weight:500;}
+
+  .content-type{background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:1.1rem;}
+  .content-type h3{font-size:0.82rem;font-weight:600;color:var(--g800);margin-bottom:0.3rem;font-family:var(--font-d);}
+  .content-type p{font-size:0.74rem;color:var(--muted);line-height:1.5;}
+  .spec{font-size:0.68rem;color:var(--muted);display:flex;gap:6px;align-items:flex-start;margin-top:4px;}
+  .spec-dot{width:4px;height:4px;border-radius:50%;background:var(--g500);flex-shrink:0;margin-top:5px;}
+
+  .budget-slider{width:100%;accent-color:var(--g600);margin-bottom:1.1rem;}
+  .sr-only{position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);}
+</style>
+
+<h2 class="sr-only">Ecommerce Builders agency platform — Meta Ads education, portfolio, booking, outreach and automation roadmap</h2>
+
+<nav>
+  <div class="logo-wrap">
+    <svg class="logo-icon" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 80 Q38 60 60 55 L140 55 Q162 60 160 80 L150 175 Q148 190 130 192 L70 192 Q52 190 50 175 Z" fill="#5ab031"/>
+      <path d="M78 55 Q78 30 100 28 Q122 30 122 55" stroke="#5ab031" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <line x1="35" y1="58" x2="165" y2="195" stroke="#1a3a0f" stroke-width="11" stroke-linecap="round"/>
+      <rect x="62" y="130" width="12" height="30" rx="2" fill="#1a3a0f"/>
+      <rect x="82" y="115" width="12" height="45" rx="2" fill="#1a3a0f"/>
+      <rect x="102" y="100" width="12" height="60" rx="2" fill="#1a3a0f"/>
+      <rect x="122" y="82" width="12" height="78" rx="2" fill="#1a3a0f"/>
+      <polyline points="65,148 83,130 103,115 138,80" stroke="#1a3a0f" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <polygon points="138,80 148,90 125,88" fill="#1a3a0f"/>
+    </svg>
+    <div class="logo-text">Ecommerce<span>Builders</span></div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Home</button>
+    <button class="nav-tab" onclick="showPage('education')">Meta Ads</button>
+    <button class="nav-tab" onclick="showPage('portfolio')">Portfolio</button>
+    <button class="nav-tab" onclick="showPage('booking')">Book a Call</button>
+    <button class="nav-tab" onclick="showPage('outreach')">Outreach</button>
+    <button class="nav-tab" onclick="showPage('roadmap')">Roadmap</button>
+  </div>
+  <button class="nav-cta" onclick="showPage('booking')">Get Started</button>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">Meta Ads Agency — Karachi, Pakistan</div>
+    <h1>We Scale Ecommerce<br><em>With Paid Ads</em></h1>
+    <p>From zero to growth engine. We run Meta ad campaigns that turn cold audiences into loyal customers — with full transparency on every rupee spent.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('booking')">Book Free Strategy Call</button>
+      <button class="btn-ghost" onclick="showPage('portfolio')">View Case Studies</button>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">47+</div><div class="stat-label">Brands Scaled</div></div>
+    <div class="stat"><div class="stat-num">4.2x</div><div class="stat-label">Avg ROAS</div></div>
+    <div class="stat"><div class="stat-num">₨2.1Cr</div><div class="stat-label">Ad Spend Managed</div></div>
+    <div class="stat"><div class="stat-num">18%</div><div class="stat-label">Avg Conversion Lift</div></div>
+  </div>
+  <div style="padding:2.2rem 0 1rem;">
+    <div class="sec-head">
+      <div class="sec-tag">What We Do</div>
+      <div class="sec-title">End-to-End Meta Ads Management</div>
+      <div class="sec-sub">From strategy to creative to optimization — we handle everything</div>
+    </div>
+    <div class="cards-grid">
+      <div class="card" onclick="showPage('education')">
+        <div class="card-icon">🎯</div>
+        <h3>Campaign Strategy</h3>
+        <p>Full-funnel Meta ad architecture — awareness, consideration, and conversion campaigns built around your margins.</p>
+        <div class="pills"><span class="pill">TOF/MOF/BOF</span><span class="pill">Audience Research</span></div>
+      </div>
+      <div class="card" onclick="showPage('education')">
+        <div class="card-icon">🎨</div>
+        <h3>Creative Production</h3>
+        <p>UGC-style videos, static carousels, story ads, and dynamic creatives that stop the scroll and drive action.</p>
+        <div class="pills"><span class="pill">UGC</span><span class="pill">Video Ads</span><span class="pill">DPA</span></div>
+      </div>
+      <div class="card" onclick="showPage('education')">
+        <div class="card-icon">📊</div>
+        <h3>Budget Allocation</h3>
+        <p>Intelligent budget distribution across campaigns. Spend where it matters, cut what doesn't work.</p>
+        <div class="pills"><span class="pill">CBO</span><span class="pill">ABO</span><span class="pill">Scaling</span></div>
+      </div>
+      <div class="card" onclick="showPage('roadmap')">
+        <div class="card-icon">🤖</div>
+        <h3>AI Automation</h3>
+        <p>Coming soon: automated brand setup, content generation, and campaign management through intelligent agents.</p>
+        <div class="pills"><span class="pill">Brand AI</span><span class="pill">Agent-Based</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- META ADS EDUCATION -->
+<div id="page-education" class="page">
+  <div class="sec-head">
+    <div class="sec-tag">Knowledge Hub</div>
+    <div class="sec-title">The Meta Ads Playbook</div>
+    <div class="sec-sub">Everything you need to understand how we build and run profitable campaigns</div>
+  </div>
+
+  <div style="margin-bottom:1.8rem;">
+    <div style="font-size:0.72rem;color:var(--g600);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1.5px;background:var(--g400);display:inline-block;"></span>01 — Meta Platforms</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1.4rem;">
+      <div class="card" style="text-align:center;padding:1.1rem 0.7rem;">
+        <div style="font-size:1.6rem;margin-bottom:0.4rem;">📘</div>
+        <div style="font-size:0.82rem;font-weight:600;color:var(--g800);">Facebook</div>
+        <div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">Feed, Stories, Marketplace, Reels</div>
+      </div>
+      <div class="card" style="text-align:center;padding:1.1rem 0.7rem;">
+        <div style="font-size:1.6rem;margin-bottom:0.4rem;">📸</div>
+        <div style="font-size:0.82rem;font-weight:600;color:var(--g800);">Instagram</div>
+        <div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">Feed, Stories, Explore, Reels</div>
+      </div>
+      <div class="card" style="text-align:center;padding:1.1rem 0.7rem;">
+        <div style="font-size:1.6rem;margin-bottom:0.4rem;">💬</div>
+        <div style="font-size:0.82rem;font-weight:600;color:var(--g800);">Messenger</div>
+        <div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">Inbox Ads, Click-to-Chat</div>
+      </div>
+      <div class="card" style="text-align:center;padding:1.1rem 0.7rem;">
+        <div style="font-size:1.6rem;margin-bottom:0.4rem;">🌐</div>
+        <div style="font-size:0.82rem;font-weight:600;color:var(--g800);">Audience Network</div>
+        <div style="font-size:0.68rem;color:var(--muted);margin-top:3px;">In-App, Interstitial</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.8rem;">
+    <div style="font-size:0.72rem;color:var(--g600);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1.5px;background:var(--g400);display:inline-block;"></span>02 — Ad Formats</div>
+    <div class="cards-grid">
+      <div class="card"><div class="card-icon">🖼️</div><h3>Single Image</h3><p>Best for direct offers, product showcases, and retargeting. Simple, fast to produce, easy to test.</p><div class="pills"><span class="pill">Fast Testing</span><span class="pill">Low CPM</span></div></div>
+      <div class="card"><div class="card-icon">🎬</div><h3>Video / Reels</h3><p>Highest engagement. UGC-style videos build trust. Works at every funnel stage — awareness to conversion.</p><div class="pills"><span class="pill">UGC</span><span class="pill">VSL</span><span class="pill">Demo</span></div></div>
+      <div class="card"><div class="card-icon">🗂️</div><h3>Carousel</h3><p>Show multiple products or steps. Great for ecommerce catalogues and problem-solution storytelling.</p><div class="pills"><span class="pill">Multi-Product</span><span class="pill">Story Arc</span></div></div>
+      <div class="card"><div class="card-icon">⚡</div><h3>Dynamic Product Ads</h3><p>Automatically serve the right product based on browse/purchase behavior. Best for retargeting at scale.</p><div class="pills"><span class="pill">Retargeting</span><span class="pill">Catalog</span></div></div>
+      <div class="card"><div class="card-icon">📋</div><h3>Lead Gen Forms</h3><p>Native Meta forms that capture leads without leaving the app. High conversion for service-based offers.</p><div class="pills"><span class="pill">No Landing Page</span><span class="pill">Low Friction</span></div></div>
+      <div class="card"><div class="card-icon">🛍️</div><h3>Advantage+ Shopping</h3><p>Meta's AI-driven campaign type. Best for scaling ecommerce with broad targeting + automated bidding.</p><div class="pills"><span class="pill">ASC</span><span class="pill">AI Driven</span></div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.8rem;">
+    <div style="font-size:0.72rem;color:var(--g600);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1.5px;background:var(--g400);display:inline-block;"></span>03 — Full Funnel Structure</div>
+    <div class="panel">
+      <div class="funnel-stage">
+        <div class="f-icon" style="background:var(--g50);border:1px solid var(--border);">🔴</div>
+        <div class="f-content"><h4>Top of Funnel (TOF) — Awareness</h4><p>Cold audiences. Broad or interest-based targeting. Goal: impressions, video views. Reels + Video work best.</p></div>
+        <div class="f-badge">50–60% budget</div>
+      </div>
+      <div class="funnel-stage">
+        <div class="f-icon" style="background:var(--g50);border:1px solid var(--border);">🟡</div>
+        <div class="f-content"><h4>Middle of Funnel (MOF) — Consideration</h4><p>Warm audiences (video viewers, page engagers). Goal: website traffic, add to cart. Carousel + Static.</p></div>
+        <div class="f-badge">25–30% budget</div>
+      </div>
+      <div class="funnel-stage">
+        <div class="f-icon" style="background:var(--g50);border:1px solid var(--border);">🟢</div>
+        <div class="f-content"><h4>Bottom of Funnel (BOF) — Conversion</h4><p>Hot retargeting: cart abandoners, product viewers, past purchasers. DPA + strong offer copy + urgency.</p></div>
+        <div class="f-badge">15–20% budget</div>
+      </div>
+      <div style="border-top:1.5px solid var(--border);margin-top:0.5rem;padding-top:1rem;font-size:0.76rem;color:var(--muted);">
+        Structure: 1 Campaign → 3–5 Ad Sets (audiences) → 3–5 Ads each. Use CBO at campaign level for AI optimization across ad sets.
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.8rem;">
+    <div style="font-size:0.72rem;color:var(--g600);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1.5px;background:var(--g400);display:inline-block;"></span>04 — Budget Allocator Tool</div>
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:0.4rem;">
+        <span style="color:var(--muted);font-weight:500;">Daily Budget (PKR)</span>
+        <span id="bdsp" style="color:var(--g700);font-weight:700;">₨ 10,000</span>
+      </div>
+      <input type="range" class="budget-slider" min="2000" max="100000" step="1000" value="10000" id="bdinput" oninput="updateBudget(this.value)">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:0.6rem;">
+        <div><div class="budget-bar-bg"><div class="budget-bar-fill" id="tof-bar" style="height:55%;background:var(--g600);"></div></div><div class="budget-bar-label">TOF</div><div class="budget-bar-val" id="tof-val">₨ 5,500</div></div>
+        <div><div class="budget-bar-bg"><div class="budget-bar-fill" id="mof-bar" style="height:28%;background:var(--g400);"></div></div><div class="budget-bar-label">MOF</div><div class="budget-bar-val" id="mof-val">₨ 2,800</div></div>
+        <div><div class="budget-bar-bg"><div class="budget-bar-fill" id="bof-bar" style="height:17%;background:var(--g200);border:1px solid var(--border);"></div></div><div class="budget-bar-label">BOF</div><div class="budget-bar-val" id="bof-val">₨ 1,700</div></div>
+      </div>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.9rem;">Estimated reach: <span id="reach-est" style="color:var(--g700);font-weight:600;">18,000–45,000</span> people/day</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.8rem;">
+    <div style="font-size:0.72rem;color:var(--g600);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;"><span style="width:20px;height:1.5px;background:var(--g400);display:inline-block;"></span>05 — Content Creation Framework</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.9rem;">
+      <div class="content-type">
+        <div style="font-size:1.3rem;margin-bottom:0.5rem;">🎥</div>
+        <h3>UGC Video Ads</h3>
+        <p>Authentic 15–30s creator-style videos. Hook in 3s, problem-solution-CTA structure.</p>
+        <div style="margin-top:0.6rem;">
+          <div class="spec"><div class="spec-dot"></div><span>Ratio: 9:16 Reels/Stories, 4:5 Feed</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Length: 15–30 seconds optimal</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Captions always on (85% watch muted)</span></div>
+        </div>
+      </div>
+      <div class="content-type">
+        <div style="font-size:1.3rem;margin-bottom:0.5rem;">🖼️</div>
+        <h3>Static Image Ads</h3>
+        <p>High-contrast product images with bold headline overlays. Single clear value prop.</p>
+        <div style="margin-top:0.6rem;">
+          <div class="spec"><div class="spec-dot"></div><span>Size: 1080×1080 or 1080×1350</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Text: under 20% of image area</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Test: 3–5 variants per offer</span></div>
+        </div>
+      </div>
+      <div class="content-type">
+        <div style="font-size:1.3rem;margin-bottom:0.5rem;">📱</div>
+        <h3>Story / Reel Ads</h3>
+        <p>Full-screen vertical. Pattern interrupt in first frame is critical to stopping scroll.</p>
+        <div style="margin-top:0.6rem;">
+          <div class="spec"><div class="spec-dot"></div><span>Format: 1080×1920 (9:16)</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Keep content in middle 80%</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Motion increases CTR 30%+</span></div>
+        </div>
+      </div>
+      <div class="content-type">
+        <div style="font-size:1.3rem;margin-bottom:0.5rem;">📦</div>
+        <h3>Carousel Ads</h3>
+        <p>First card = scroll-stopping hook. Each card = one benefit. Last card = CTA.</p>
+        <div style="margin-top:0.6rem;">
+          <div class="spec"><div class="spec-dot"></div><span>Cards: 3–7 (sweet spot: 4–5)</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Consistent visual theme</span></div>
+          <div class="spec"><div class="spec-dot"></div><span>Use for: multi-product, before/after</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div id="page-portfolio" class="page">
+  <div class="sec-head">
+    <div class="sec-tag">Case Studies</div>
+    <div class="sec-title">Client Results</div>
+    <div class="sec-sub">Real campaigns, real numbers. Here's what we've achieved for brands like yours.</div>
+  </div>
+  <div class="cards-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+    <div class="case-card">
+      <div class="case-banner" style="background:var(--g900);color:var(--g200);">ZenSkin Co.</div>
+      <div class="case-body">
+        <span class="case-tag">Skincare</span><span class="case-tag">D2C Brand</span>
+        <div class="case-title">Scaled from ₨0 to ₨4.2Cr/month</div>
+        <div class="case-desc">Built TOF awareness with UGC creators, retargeted with before/after carousels. 90-day journey to profitability.</div>
+        <div class="case-metrics">
+          <div><div class="cm-val">5.1x</div><div class="cm-label">ROAS</div></div>
+          <div><div class="cm-val">₨12</div><div class="cm-label">CPL</div></div>
+          <div><div class="cm-val">23%</div><div class="cm-label">CVR</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-banner" style="background:var(--g800);color:var(--g100);">KickHouse PK</div>
+      <div class="case-body">
+        <span class="case-tag">Footwear</span><span class="case-tag">eCommerce</span>
+        <div class="case-title">3x Revenue in 60 Days</div>
+        <div class="case-desc">Rebuilt campaigns with Advantage+ Shopping + DPA retargeting. Cut CPA by 40% in the first month.</div>
+        <div class="case-metrics">
+          <div><div class="cm-val">4.7x</div><div class="cm-label">ROAS</div></div>
+          <div><div class="cm-val">-40%</div><div class="cm-label">CPA Drop</div></div>
+          <div><div class="cm-val">3x</div><div class="cm-label">Revenue</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-banner" style="background:var(--g700);color:var(--white);">OrganicBowl</div>
+      <div class="case-body">
+        <span class="case-tag">Food & Health</span><span class="case-tag">Subscription</span>
+        <div class="case-title">2,200 active subscribers in 4 months</div>
+        <div class="case-desc">Video ads showing meal prep got 12M impressions. Lead gen forms for trial offer drove subscription growth.</div>
+        <div class="case-metrics">
+          <div><div class="cm-val">2,200</div><div class="cm-label">Subs</div></div>
+          <div><div class="cm-val">₨340</div><div class="cm-label">CAC</div></div>
+          <div><div class="cm-val">12M</div><div class="cm-label">Impressions</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-label">Aggregated Portfolio Data</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+      <div><div style="font-size:1.4rem;font-family:var(--font-d);font-weight:800;color:var(--g700);">₨2.1Cr</div><div style="font-size:0.7rem;color:var(--muted);">Total ad spend managed</div></div>
+      <div><div style="font-size:1.4rem;font-family:var(--font-d);font-weight:800;color:var(--g700);">4.2x</div><div style="font-size:0.7rem;color:var(--muted);">Average ROAS</div></div>
+      <div><div style="font-size:1.4rem;font-family:var(--font-d);font-weight:800;color:var(--g700);">47+</div><div style="font-size:0.7rem;color:var(--muted);">Brands scaled</div></div>
+      <div><div style="font-size:1.4rem;font-family:var(--font-d);font-weight:800;color:var(--g700);">8 niches</div><div style="font-size:0.7rem;color:var(--muted);">Skincare, Food, Fashion, Services...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div id="page-booking" class="page">
+  <div class="sec-head">
+    <div class="sec-tag">Schedule</div>
+    <div class="sec-title">Book a Free Strategy Call</div>
+    <div class="sec-sub">30 minutes. We'll audit your current ads and show you exactly what's possible.</div>
+  </div>
+  <div class="booking-grid">
+    <div>
+      <div class="bform">
+        <div class="panel-label">Select a Date</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:0.4rem;font-size:0.62rem;color:var(--muted);text-align:center;font-weight:500;">
+          <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;" id="calendar"></div>
+        <div class="panel-label" style="margin-top:1.2rem;">Select a Time (PKT)</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;">
+          <div class="time-slot taken">10:00 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">11:00 AM</div>
+          <div class="time-slot taken">12:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">2:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">3:00 PM</div>
+          <div class="time-slot taken">4:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">5:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">6:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">7:00 PM</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="bform">
+        <div class="panel-label">Your Details</div>
+        <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="e.g. Ahmed Khan"></div>
+        <div class="form-group"><label class="form-label">WhatsApp / Phone</label><input type="text" class="form-input" placeholder="+92 300 000 0000"></div>
+        <div class="form-group"><label class="form-label">Business / Brand Name</label><input type="text" class="form-input" placeholder="e.g. My Clothing Store"></div>
+        <div class="form-group"><label class="form-label">Monthly Ad Budget</label>
+          <select class="form-select"><option>Under ₨50,000/month</option><option>₨50K – ₨2L/month</option><option>₨2L – ₨5L/month</option><option>₨5L+/month</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Biggest challenge?</label>
+          <select class="form-select"><option>Never run ads before</option><option>Running ads but poor ROAS</option><option>Scaling — hitting a wall</option><option>Creative isn't working</option><option>Tracking & attribution issues</option></select>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:0.4rem;" onclick="bookCall()">Confirm Booking</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OUTREACH -->
+<div id="page-outreach" class="page">
+  <div class="sec-head">
+    <div class="sec-tag">Cold Outreach</div>
+    <div class="sec-title">Outreach Templates</div>
+    <div class="sec-sub">Proven cold outreach sequences for Instagram DMs, WhatsApp, and email</div>
+  </div>
+  <div class="outreach-card">
+    <div class="outreach-header">
+      <div class="outreach-title">Instagram DM — Ecommerce Brand</div>
+      <div class="status-pill">34% response rate</div>
+    </div>
+    <div class="outreach-body">
+      Hey <strong>[Name]</strong> 👋<br><br>
+      Noticed <strong>[Brand]</strong> — love the products. I ran a quick audit of your Meta ads and spotted 3 quick wins that could improve your ROAS within 30 days.<br><br>
+      We recently helped <strong>[Similar Brand]</strong> (also in <strong>[niche]</strong>) go from 1.8x to 4.3x ROAS in 60 days using the same framework.<br><br>
+      Would you be open to a 20-min Zoom this week? Zero pitch — just show you what we found.
+    </div>
+  </div>
+  <div class="outreach-card">
+    <div class="outreach-header">
+      <div class="outreach-title">WhatsApp Message — Local Business</div>
+      <div class="status-pill">41% open rate</div>
+    </div>
+    <div class="outreach-body">
+      Assalam o Alaikum <strong>[Name]</strong>,<br><br>
+      I came across <strong>[Business Name]</strong> on Instagram — great brand! I'm from <strong>Ecommerce Builders</strong>, a Meta ads agency based in Karachi.<br><br>
+      One of our recent clients in <strong>[their niche]</strong> went from spending ₨30K/month in ads to generating ₨3.2Cr/month in sales.<br><br>
+      Are you currently running any paid ads? Would love to share a few ideas specific to your brand — free of charge.
+    </div>
+  </div>
+  <div class="outreach-card">
+    <div class="outreach-header">
+      <div class="outreach-title">Email — Cold Outreach</div>
+      <div class="status-pill">28% reply rate</div>
+    </div>
+    <div class="outreach-body">
+      Subject: <strong>Quick question about [Brand]'s Meta ads</strong><br><br>
+      Hi <strong>[Name]</strong>,<br><br>
+      I noticed <strong>[Brand]</strong> is running ads on Facebook/Instagram — I ran an informal audit and found a few patterns that are likely costing you money.<br><br>
+      The biggest one: <strong>your retargeting audience is probably too cold</strong>. Most brands waste 40–60% of retargeting budget on people who will never convert.<br><br>
+      We've fixed this for 10+ brands in <strong>[niche]</strong>. Happy to show you the exact framework on a 20-min call. Here's my calendar: <strong>[link]</strong><br><br>
+      — Team Ecommerce Builders
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-label">Outreach Sequence — Day by Day</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:1rem;align-items:center;font-size:0.78rem;"><div style="width:55px;color:var(--g600);font-weight:600;flex-shrink:0;">Day 1</div><div style="color:var(--text2);">First touch — Instagram DM or WhatsApp intro message</div></div>
+      <div style="width:1.5px;height:10px;background:var(--border2);margin-left:26px;"></div>
+      <div style="display:flex;gap:1rem;align-items:center;font-size:0.78rem;"><div style="width:55px;color:var(--muted);font-weight:600;flex-shrink:0;">Day 3</div><div style="color:var(--muted);">Follow-up — share a relevant case study or insight</div></div>
+      <div style="width:1.5px;height:10px;background:var(--border);margin-left:26px;"></div>
+      <div style="display:flex;gap:1rem;align-items:center;font-size:0.78rem;"><div style="width:55px;color:var(--muted);font-weight:600;flex-shrink:0;">Day 7</div><div style="color:var(--muted);">Value drop — send free mini-audit or competitor insight</div></div>
+      <div style="width:1.5px;height:10px;background:var(--border);margin-left:26px;"></div>
+      <div style="display:flex;gap:1rem;align-items:center;font-size:0.78rem;"><div style="width:55px;color:var(--muted);font-weight:600;flex-shrink:0;">Day 14</div><div style="color:var(--muted);">Break-up message — create urgency, close the loop</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div id="page-roadmap" class="page">
+  <div class="sec-head">
+    <div class="sec-tag">Vision</div>
+    <div class="sec-title">The Automation Roadmap</div>
+    <div class="sec-sub">From manual agency to AI-powered ecommerce OS — the full build plan</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.8rem;">
+    <div style="background:var(--g50);border:1.5px solid var(--g400);border-radius:12px;padding:1.3rem;">
+      <div style="font-size:0.68rem;color:var(--g600);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;font-weight:600;">Now — Phase 1</div>
+      <div style="font-family:var(--font-d);font-size:1.05rem;font-weight:700;color:var(--g800);margin-bottom:0.4rem;">Human-Led Agency</div>
+      <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;">Manual campaign management, client onboarding, creative production, and reporting. Build case studies and reputation.</div>
+    </div>
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.3rem;">
+      <div style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;font-weight:600;">Goal — Phase 3</div>
+      <div style="font-family:var(--font-d);font-size:1.05rem;font-weight:700;color:var(--muted);margin-bottom:0.4rem;">Full Automation OS</div>
+      <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;">AI agents handle brand naming, identity, content, ad campaigns, competitor analysis, and financial modelling autonomously.</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.8rem;">
+    <div class="auto-step"><div class="auto-num">1</div><div class="auto-content"><h4>Brand Name Generator Agent</h4><p>Input niche + values → AI generates 10+ name options, domain checks, trademark screening, and brandability scores.</p></div><div class="auto-status">Phase 2</div></div>
+    <div class="connector-line"></div>
+    <div class="auto-step"><div class="auto-num">2</div><div class="auto-content"><h4>Brand Identity Builder</h4><p>Auto-generate logo concepts, color palettes, typography, brand voice guidelines, and social media kits using AI agents.</p></div><div class="auto-status">Phase 2</div></div>
+    <div class="connector-line"></div>
+    <div class="auto-step"><div class="auto-num">3</div><div class="auto-content"><h4>Competitor Analysis Engine</h4><p>Scrape Meta Ad Library, analyse competitor creatives, offers, and targeting. Surface winning angles for your niche automatically.</p></div><div class="auto-status">Phase 2</div></div>
+    <div class="connector-line"></div>
+    <div class="auto-step"><div class="auto-num">4</div><div class="auto-content"><h4>AI Content Creation Pipeline</h4><p>Brief → AI script → voiceover → video assembly → auto-caption → ready-to-publish ad creative. UGC-style in minutes.</p></div><div class="auto-status future">Phase 3</div></div>
+    <div class="connector-line"></div>
+    <div class="auto-step"><div class="auto-num">5</div><div class="auto-content"><h4>Campaign Setup Agent</h4><p>Auto-create Meta campaign structure, audiences, ad sets, and upload creatives via API. Full-funnel deployed in under 10 minutes.</p></div><div class="auto-status future">Phase 3</div></div>
+    <div class="connector-line"></div>
+    <div class="auto-step"><div class="auto-num">6</div><div class="auto-content"><h4>Cost, Profit & P&L Calculator</h4><p>Input COGS, AOV, ad spend → real-time breakeven ROAS, projected profit, unit economics, and scaling recommendations.</p></div><div class="auto-status" style="background:var(--g50);color:var(--g600);">Phase 2 ready</div></div>
+    <div class="connector-line"></div>
+    <div class="auto-step"><div class="auto-num">7</div><div class="auto-content"><h4>Optimization & Reporting Agent</h4><p>Daily automated performance review. Kill underperformers, scale winners, flag anomalies. Weekly AI-written client reports.</p></div><div class="auto-status future">Phase 3</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-label">Phase Timeline</div>
+    <div>
+      <div class="rdm-item"><div class="rdm-num" style="background:var(--g50);border:1.5px solid var(--g400);color:var(--g700);">1</div><div class="rdm-content"><h4>Months 1–3: Build reputation</h4><p>Onboard 5–10 clients manually. Build case studies. Refine process. Establish cold outreach engine. Target ₨3L–₨5L/month revenue.</p><span class="phase-tag" style="background:var(--g50);color:var(--g700);border:1px solid var(--border);">In progress</span></div></div>
+      <div class="rdm-item"><div class="rdm-num" style="background:var(--off);border:1.5px solid var(--border);color:var(--muted);">2</div><div class="rdm-content"><h4>Months 4–8: Semi-automation</h4><p>Integrate AI tools for competitor research, brand naming, and P&L calculators. Build proprietary templates and systems. Scale to ₨10L+/month.</p><span class="phase-tag" style="background:var(--off);color:var(--muted);border:1px solid var(--border);">Planned</span></div></div>
+      <div class="rdm-item"><div class="rdm-num" style="background:var(--off);border:1.5px solid var(--border);color:var(--muted);">3</div><div class="rdm-content"><h4>Months 9–18: Full AI OS launch</h4><p>Launch self-serve product — clients input brand details and AI agents handle everything from naming to live campaigns. SaaS model.</p><span class="phase-tag" style="background:var(--off);color:var(--muted);border:1px solid var(--border);">Future</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  var tabs=['home','education','portfolio','booking','outreach','roadmap'];
+  var idx=tabs.indexOf(id);
+  if(idx>=0)document.querySelectorAll('.nav-tab')[idx].classList.add('active');
+}
+function updateBudget(val){
+  var v=parseInt(val);
+  document.getElementById('bdsp').textContent='₨ '+v.toLocaleString();
+  var tof=Math.round(v*0.55),mof=Math.round(v*0.28),bof=v-tof-mof;
+  document.getElementById('tof-val').textContent='₨ '+tof.toLocaleString();
+  document.getElementById('mof-val').textContent='₨ '+mof.toLocaleString();
+  document.getElementById('bof-val').textContent='₨ '+bof.toLocaleString();
+  var rLow=Math.round(v*1.8),rHigh=Math.round(v*4.5);
+  document.getElementById('reach-est').textContent=rLow.toLocaleString()+'–'+rHigh.toLocaleString();
+}
+function selectTime(el){
+  document.querySelectorAll('.time-slot:not(.taken)').forEach(t=>t.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function bookCall(){alert('Booking confirmed! You\'ll receive a WhatsApp confirmation within 2 hours.');}
+var cal=document.getElementById('calendar');
+if(cal){
+  var today=new Date();
+  var dow=today.getDay();
+  for(var i=0;i<28;i++){
+    var d=document.createElement('div');
+    d.className='cal-day';
+    var date=new Date(today);
+    date.setDate(today.getDate()-dow+i);
+    d.textContent=date.getDate();
+    if(date<today&&date.toDateString()!==today.toDateString())d.classList.add('past');
+    if(date.toDateString()===today.toDateString())d.classList.add('today');
+    d.onclick=(function(el){return function(){
+      document.querySelectorAll('.cal-day').forEach(function(x){x.classList.remove('selected');});
+      el.classList.add('selected');
+    };})(d);
+    cal.appendChild(d);
+  }
+}
+</script>
